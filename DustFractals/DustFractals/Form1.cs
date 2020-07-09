@@ -20,10 +20,19 @@ namespace DustFractals
         #region memebers
 
         Bitmap _bitmap = null;
+        float _a = 0;
+        float _b = 0.7f;
+        float _c = 0.7f;
+        float _d = 0;
 
         #endregion
 
         #region private
+
+        void RenderFractal(Graphics g)
+        {
+             // TODO:
+        }
 
         void Render()
         {
@@ -33,7 +42,8 @@ namespace DustFractals
             Graphics g = Graphics.FromImage(_bitmap);
             g.Clear(Color.White);
 
-            // TODO:
+            // отрисовка фрактала
+            RenderFractal(g);
 
             pictureBox1.Image = _bitmap;
         }
