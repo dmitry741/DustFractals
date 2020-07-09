@@ -33,8 +33,6 @@ namespace DustFractals
             Graphics g = Graphics.FromImage(_bitmap);
             g.Clear(Color.White);
 
-            g.DrawString("All ok", new Font("Arial", 24f, FontStyle.Regular), Brushes.Black, new Point(20, 20));
-
             // TODO:
 
             pictureBox1.Image = _bitmap;
@@ -61,6 +59,11 @@ namespace DustFractals
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Render();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
