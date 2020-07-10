@@ -65,8 +65,6 @@ namespace DustFractals
             if (_bitmap == null)
                 return;
 
-            //Graphics g = Graphics.FromImage(_bitmap);
-
             Rectangle rect = new Rectangle(0, 0, _bitmap.Width, _bitmap.Height);
             System.Drawing.Imaging.BitmapData bitmapData = _bitmap.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, _bitmap.PixelFormat);
             IntPtr ptr = bitmapData.Scan0;
@@ -139,7 +137,6 @@ namespace DustFractals
                 _rgbValues = new byte[bytes];
                 _bitmap.UnlockBits(bitmapData);
 
-                CreateFractal();
                 _points = CreateFractal();
             }
         }
