@@ -23,9 +23,9 @@ namespace DustFractals
         byte[] _rgbValues = null;
         IEnumerable<PointF> _points = null;
 
-        float _a = 0;
-        float _b = 0.7f;
-        float _c = 0.7f;
+        float _a = 0.5f;
+        float _b = Convert.ToSingle(1.0f/ (2 * Math.Sqrt(3)));
+        float _c = 0.5f;
         float _d = 0;
 
         #endregion
@@ -35,9 +35,9 @@ namespace DustFractals
         IEnumerable<PointF> CreateFractal()
         {
             const int cStep = 13;
-            Matrix L = new Matrix { X11 = _a, X12 = -_b, X21 = _b, X22 = _a };
-            Matrix R = new Matrix { X11 = _c, X12 = -_d, X21 = _d, X22 = _c };
-            Vector vr = new Vector { X = 1 - _c, Y = -_d };
+            Matrix L = new Matrix { X11 = _a, X12 = _b, X21 = _b, X22 = -_a };
+            Matrix R = new Matrix { X11 = _a, X12 = -_b, X21 = -_b, X22 = -_a };
+            Vector vr = new Vector { X = _a, Y = _b };
 
             List<Vector> vectors = new List<Vector>
             {
@@ -72,18 +72,36 @@ namespace DustFractals
             int bytes = Math.Abs(bitmapData.Stride) * _bitmap.Height;
             Array.Clear(_rgbValues, 0, bytes);
 
-            float xmin = -1.2f;
-            float xmax = 1.2f;
-            float ymin = -1.2f;
-            float ymax = 1.2f;
+            float xmin = _points.Min(z => z.X);
+            float xmax = _points.Max(z => z.X);
+            float ymin = _points.Min(z => z.Y);
+            float ymax = _points.Max(z => z.Y);
 
-            float kx = pictureBox1.Width / (xmax - xmin);
-            float ky = pictureBox1.Height / (ymin - ymax);
+            RectangleF winRect = RectangleF.Empty;
+            float k = (xmax - xmin) / (ymax - ymin);
+
+            if (xmax - xmin > ymax - ymin)
+            {
+                winRect.X = 0;
+                winRect.Width = pictureBox1.Width;
+                winRect.Y = pictureBox1.Height / 2 - pictureBox1.Height / (2 * k);
+                winRect.Height = pictureBox1.Height / k;
+            }
+            else
+            {
+                winRect.X = pictureBox1.Width / 2 - pictureBox1.Width / (2 * k);
+                winRect.Width = pictureBox1.Width / k;
+                winRect.Y = 0;
+                winRect.Height = pictureBox1.Height;
+            }
+
+            float kx = winRect.Width / (xmax - xmin);
+            float ky = winRect.Height / (ymin - ymax);
 
             foreach (PointF point in _points)
             {
-                int X = Convert.ToInt32(kx * (point.X - xmin));
-                int Y = Convert.ToInt32(ky * (point.Y - ymax));
+                int X = Convert.ToInt32(kx * (point.X - xmin) + winRect.X);
+                int Y = Convert.ToInt32(ky * (point.Y - ymax) + winRect.Y);
                 int index = Y * Math.Abs(bitmapData.Stride) + X * 3;
 
                 if (index < 0 || index >= bytes)
