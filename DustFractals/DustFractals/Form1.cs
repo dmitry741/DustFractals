@@ -22,22 +22,15 @@ namespace DustFractals
         Bitmap _bitmap = null;
         byte[] _rgbValues = null;
         IEnumerable<PointF> _points = null;
-
-        float _a = 0.5f;
-        float _b = Convert.ToSingle(1.0f/ (2 * Math.Sqrt(3)));
-        float _c = 0.5f;
-        float _d = 0;
+        IDustFractal _fractal = null;
 
         #endregion
 
         #region private
 
-        IEnumerable<PointF> CreateFractal()
+        IEnumerable<PointF> CreateFractal(IDustFractal fractal)
         {
-            const int cStep = 13;
-            Matrix L = new Matrix { X11 = _a, X12 = _b, X21 = _b, X22 = -_a };
-            Matrix R = new Matrix { X11 = _a, X12 = -_b, X21 = -_b, X22 = -_a };
-            Vector vr = new Vector { X = _a, Y = _b };
+            const int cStep = 16;
 
             List<Vector> vectors = new List<Vector>
             {
@@ -50,8 +43,8 @@ namespace DustFractals
 
                 foreach (Vector v in vectors)
                 {
-                    temps.Add(L * v);
-                    temps.Add(R * v + vr);
+                    temps.Add(fractal.GetL(v));
+                    temps.Add(fractal.GetR(v));
                 }
 
                 vectors = temps;
@@ -137,7 +130,15 @@ namespace DustFractals
                 _rgbValues = new byte[bytes];
                 _bitmap.UnlockBits(bitmapData);
 
-                _points = CreateFractal();
+                _fractal = FactoryFractals.GetFractal(0);
+                _points = CreateFractal(_fractal);
+
+                for (int i = 0; i < 6; i++)
+                {
+                    comboBox1.Items.Add(i);
+                }
+
+                comboBox1.SelectedIndex = 0;
             }
         }
 
@@ -154,8 +155,6 @@ namespace DustFractals
                 int bytes = Math.Abs(bitmapData.Stride) * _bitmap.Height;
                 _rgbValues = new byte[bytes];
                 _bitmap.UnlockBits(bitmapData);
-
-                _points = CreateFractal();
             }
         }
 
@@ -167,6 +166,13 @@ namespace DustFractals
         private void button1_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _fractal = FactoryFractals.GetFractal(comboBox1.SelectedIndex);
+            _points = CreateFractal(_fractal);
+            Render();
         }
     }
 }

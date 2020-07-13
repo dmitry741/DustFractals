@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AbstarctDustFractal.cs" />
     <Compile Include="CompressReflactionFractal.cs" />
+    <Compile Include="FactoryFractals.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
