@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DustFractals
 {
+    /// <summary>
+    /// Декларация методов для получения правого и левого преобразований.
+    /// </summary>
     interface IDustFractal
     {
         Vector GetL(Vector v);
