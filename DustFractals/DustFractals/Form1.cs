@@ -30,22 +30,17 @@ namespace DustFractals
 
         IEnumerable<PointF> CreateFractal(IDustFractal fractal)
         {
-            const int cStep = 16;
-
             List<Vector> vectors = new List<Vector>
             {
                 new Vector { X = 1, Y = 0 }
             };
 
-            for (int i = 0; i < cStep; i++)
+            for (int i = 0; i < 15; i++)
             {
                 List<Vector> temps = new List<Vector>();
 
-                foreach (Vector v in vectors)
-                {
-                    temps.Add(fractal.GetL(v));
-                    temps.Add(fractal.GetR(v));
-                }
+                temps.AddRange(vectors.Select(x => fractal.GetL(x)));
+                temps.AddRange(vectors.Select(x => fractal.GetR(x)));
 
                 vectors = temps;
             }
@@ -60,8 +55,6 @@ namespace DustFractals
 
             Rectangle rect = new Rectangle(0, 0, _bitmap.Width, _bitmap.Height);
             System.Drawing.Imaging.BitmapData bitmapData = _bitmap.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, _bitmap.PixelFormat);
-            IntPtr ptr = bitmapData.Scan0;
-
             int bytes = Math.Abs(bitmapData.Stride) * _bitmap.Height;
             Array.Clear(_rgbValues, 0, bytes);
 
@@ -73,7 +66,7 @@ namespace DustFractals
             RectangleF winRect = RectangleF.Empty;
             float k = (xmax - xmin) / (ymax - ymin);
 
-            if (xmax - xmin > ymax - ymin)
+            if (k > 1)
             {
                 winRect.X = 0;
                 winRect.Width = pictureBox1.Width;
@@ -103,7 +96,7 @@ namespace DustFractals
                 _rgbValues[index + 1] = 255; // зеленый цвет
             }
 
-            System.Runtime.InteropServices.Marshal.Copy(_rgbValues, 0, ptr, bytes);
+            System.Runtime.InteropServices.Marshal.Copy(_rgbValues, 0, bitmapData.Scan0, bytes);
             _bitmap.UnlockBits(bitmapData);
 
             pictureBox1.Image = _bitmap;
@@ -133,12 +126,15 @@ namespace DustFractals
                 _fractal = FactoryFractals.GetFractal(0);
                 _points = CreateFractal(_fractal);
 
-                for (int i = 0; i < 6; i++)
-                {
-                    comboBox1.Items.Add(i);
-                }
-
+                comboBox1.BeginUpdate();
+                comboBox1.Items.Add("Лист");
+                comboBox1.Items.Add("Ель");
+                comboBox1.Items.Add("Кружево");
+                comboBox1.Items.Add("Дракон");
+                comboBox1.Items.Add("Кривая Коха");
+                comboBox1.Items.Add("Дендрид");
                 comboBox1.SelectedIndex = 0;
+                comboBox1.EndUpdate();
             }
         }
 

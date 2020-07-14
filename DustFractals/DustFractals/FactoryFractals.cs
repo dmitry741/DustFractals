@@ -10,8 +10,7 @@ namespace DustFractals
     {
         public static IDustFractal GetFractal(int index)
         {
-            IDustFractal fractal = null;
-
+            IDustFractal fractal;
             if (index == 0)
                 fractal = new RotationCompressFractal(0.6f, 0.6f, 0.53f, 0);
             else if (index == 1)

@@ -12,8 +12,18 @@ namespace DustFractals
     /// </summary>
     interface IDustFractal
     {
+        /// <summary>
+        /// Получение левого преобразрвания вектора (точки).
+        /// </summary>
+        /// <param name="v">Вектор для преобразования.</param>
+        /// <returns>Новый вектор.</returns>
         Vector GetL(Vector v);
 
+        /// <summary>
+        /// Получение правого преобразования точки.
+        /// </summary>
+        /// <param name="v">Вектор для преобразования.</param>
+        /// <returns>Новый вектор.</returns>
         Vector GetR(Vector v);
     }
 }

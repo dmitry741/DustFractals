@@ -45,9 +45,9 @@ namespace DustFractals
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(726, 615);
+            this.button1.Location = new System.Drawing.Point(658, 618);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 34);
+            this.button1.Size = new System.Drawing.Size(139, 34);
             this.button1.TabIndex = 1;
             this.button1.Text = "Выход";
             this.button1.UseVisualStyleBackColor = true;
@@ -59,7 +59,7 @@ namespace DustFractals
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(658, 12);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(172, 21);
+            this.comboBox1.Size = new System.Drawing.Size(139, 21);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -67,7 +67,7 @@ namespace DustFractals
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 661);
+            this.ClientSize = new System.Drawing.Size(804, 661);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
