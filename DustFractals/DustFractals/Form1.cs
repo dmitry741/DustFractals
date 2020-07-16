@@ -138,22 +138,6 @@ namespace DustFractals
             }
         }
 
-        private void pictureBox1_SizeChanged(object sender, EventArgs e)
-        {
-            _bitmap = CreateBackground(pictureBox1.Width, pictureBox1.Height);
-
-            if (_bitmap != null)
-            {
-                Rectangle rect = new Rectangle(0, 0, _bitmap.Width, _bitmap.Height);
-                System.Drawing.Imaging.BitmapData bitmapData = _bitmap.LockBits(rect,
-                    System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                    System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                int bytes = Math.Abs(bitmapData.Stride) * _bitmap.Height;
-                _rgbValues = new byte[bytes];
-                _bitmap.UnlockBits(bitmapData);
-            }
-        }
-
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Render();
