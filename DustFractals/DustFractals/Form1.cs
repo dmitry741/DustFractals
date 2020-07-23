@@ -32,10 +32,10 @@ namespace DustFractals
         {
             List<Vector> vectors = new List<Vector>
             {
-                new Vector { X = 1, Y = 0 }
+                new Vector { X = 0.5f, Y = 0 }
             };
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 16; i++)
             {
                 List<Vector> temps = new List<Vector>();
 
