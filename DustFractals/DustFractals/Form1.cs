@@ -28,6 +28,11 @@ namespace DustFractals
 
         #region private
 
+        /// <summary>
+        /// Создание коллекции точек (пылевидного фракиала) для отображения.
+        /// </summary>
+        /// <param name="fractal">IDustFractal объект.</param>
+        /// <returns>Коллекция точек.</returns>
         IEnumerable<PointF> CreateFractal(IDustFractal fractal)
         {
             List<Vector> vectors = new List<Vector>
