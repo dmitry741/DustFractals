@@ -22,7 +22,6 @@ namespace DustFractals
         Bitmap _bitmap = null;
         byte[] _rgbValues = null;
         IEnumerable<PointF> _points = null;
-        IDustFractal _fractal = null;
 
         #endregion
 
@@ -37,7 +36,7 @@ namespace DustFractals
         {
             List<Vector> vectors = new List<Vector>
             {
-                new Vector { X = 0.5f, Y = 0 }
+                new Vector { X = 0.5f, Y = 0 } // стартовая точка
             };
 
             for (int i = 0; i < 16; i++)
@@ -128,8 +127,8 @@ namespace DustFractals
                 _rgbValues = new byte[bytes];
                 _bitmap.UnlockBits(bitmapData);
 
-                _fractal = FactoryFractals.GetFractal(0);
-                _points = CreateFractal(_fractal);
+                IDustFractal fractal = FactoryFractals.GetFractal(0);
+                _points = CreateFractal(fractal);
 
                 comboBox1.BeginUpdate();
                 comboBox1.Items.Add("Лист");
@@ -155,8 +154,8 @@ namespace DustFractals
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _fractal = FactoryFractals.GetFractal(comboBox1.SelectedIndex);
-            _points = CreateFractal(_fractal);
+            IDustFractal fractal = FactoryFractals.GetFractal(comboBox1.SelectedIndex);
+            _points = CreateFractal(fractal);
             Render();
         }
     }
