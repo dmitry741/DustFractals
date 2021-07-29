@@ -8,6 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/* Урок "Фракталы."
+ * Все уроки на http://digitalmodels.ru
+ * 
+ */
+
 namespace DustFractals
 {
     public partial class Form1 : Form
